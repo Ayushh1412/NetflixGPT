@@ -5,7 +5,13 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      width: {
+        '600': '600px',
+       }
+    },
   },
-  plugins: [],
+  plugins: [
+    require("tailwindcss-inner-border"),
+  ],
 }
