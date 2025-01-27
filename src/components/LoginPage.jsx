@@ -5,7 +5,7 @@ import { auth } from "../utils/firebase";
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import { addUser} from "../utils/userSlice";
-import { BG_IMAGE, PROFILE_2 } from "../utils/constants";
+import { BG_IMAGE, PROFILE_2,PROFILE } from "../utils/constants";
 const LoginPage = () => {
   const [signInForm, setSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -50,7 +50,6 @@ const LoginPage = () => {
       const{uid,email,displayName,photoURL} = user;
       try{
         dispatch(addUser({uid:uid,displayName:displayName,email:email,photoURL:photoURL}));
-        console.log(addUser)
       }
       catch(error){
         console.log(error);
@@ -68,10 +67,11 @@ const LoginPage = () => {
       .then(() => {
         // Signed up 
         updateProfile(auth.currentUser, {
-          displayName: fullName.current.value, photoURL: {PROFILE_2}
+          displayName: fullName.current.value, photoURL:`${PROFILE_2}`
         }).then(() => {
          const{uid,email,displayName,photoURL} = auth.currentUser;
          try{
+
            dispatch(addUser({uid:uid,email:email,displayName:displayName,photoURL:photoURL }));
          }
          catch(error){

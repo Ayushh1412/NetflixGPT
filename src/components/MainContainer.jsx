@@ -9,7 +9,7 @@ const mainMovie = popularMovies[0];
 const{title,overview,id} = mainMovie;
 
   return (
-    <div className=" bg-black w-screen h-screen">
+    <div className=" bg-black w-screen aspect-video">
         <VideoTitle title={title} overview={overview}/>
         <VideoBackground movieId={id}/>
     </div>

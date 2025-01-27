@@ -20,3 +20,18 @@ select:-webkit-autofill:focus {
   color: white;
   
 }
+@layer utilities {
+  /* Chrome, Safari and Opera */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .touch-scroll{
+    -webkit-overflow-scrolling:touch;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+}
