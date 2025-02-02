@@ -21,4 +21,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 export const auth = getAuth(app);
-analytics
+
+
+export const RedirectSite = () => {
+  window.location.href = "/google55358cf2d45e2ace.html";
+};

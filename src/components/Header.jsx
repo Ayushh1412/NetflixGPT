@@ -6,6 +6,7 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { LOGO_URL, PROFILE } from "../utils/constants";
 import { removePopularMovies } from "../utils/movieSlice";
+import { setGpt } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ const Header = () => {
       navigate("/Error");
     });
   };
+  const HandleGptButton = () => {
+    dispatch(setGpt());
+  }
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -48,23 +52,36 @@ const Header = () => {
         alt="logo"
       />
       <div className="inline-flex items-center cursor-pointer gap-2 ">
-        <div>
-          <img className="w-10"
-          //  src= {photo ? photo : `${PROFILE}`}
-           src={PROFILE}
-           />
-         <p className="text-base font-bold  text-red-500">{name?.split(' ').slice(0, -1).join(' ') || name}</p>
+        <div className="px-4 py-2 -mr-2 ">
+          <select className="px-4 py-1 rounded">
+            <option>English</option>
+            <option>Hindi</option>
+            <option>Chinese</option>
+          </select>
         </div>
-        <div className="-translate-y-3">
+        {email && <div className="px-4 py-2 ">
+          <button
+          onClick={HandleGptButton}
+          className="text-base  px-4 py-1  bg-red-600 text-white rounded hover:bg-slate-700 hover:scale-95 bg-opacity-70  transition-all">GPT Search</button>
+        </div>}
+        <div className=" mr-4">
           {email && (
             <div>
-              <button onClick={handleSignOut} className="text-3xl font-bold text-red-500 ">
+              <button onClick={handleSignOut} className="text-base  px-4 py-1  bg-red-600 text-white rounded hover:bg-slate-700 hover:scale-95 bg-opacity-70 transition-all">
                 Sign Out
               </button>
             
             </div>
            )}
         </div>
+        <div className = {email?"translate-y-3":""}>
+          <img className="w-10"
+          //  src= {photo ? photo : `${PROFILE}`}
+           src={PROFILE}
+           />
+         <p className="text-base font-bold  text-red-500">{name?.split(' ').slice(0, -1).join(' ') || name}</p>
+        </div>
+        
         
       </div>
     </div>

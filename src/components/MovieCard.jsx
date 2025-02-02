@@ -5,7 +5,7 @@ const MovieCard = ({movie}) => {
     
 
   return (
-    <div className="rounded hover:scale-95 transition-all">
+    <div className="rounded hover:scale-105 transition-all">
        <div className="w-40  ml-6 rounded ">
         <img className="rounded-xl " src={"https://image.tmdb.org/t/p/w500/"+poster} alt="poster"/>
        </div>
