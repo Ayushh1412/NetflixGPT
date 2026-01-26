@@ -1,6 +1,6 @@
 import usePopularMovies from "../hooks/usePopularMovies.jsx"
 import Header from "./Header"
-import MainContainer from "./mainContainer";
+import MainContainer from "./MainContainer.jsx"
 import SecondaryContainer from "./secondaryContainer";
 import useTopRated from "../hooks/useTopRated.jsx";
 import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx";
