@@ -5,20 +5,20 @@ const userSlice = createSlice({
   initialState: {
     displayName: null,
     email: null,
-    id: null,
+    uid: null,
     photoURL: null,
   },
   reducers: {
     addUser: (state, action) => {
       state.displayName = action.payload.displayName;
       state.email = action.payload.email;
-      state.id = action.payload.id;
+      state.uid = action.payload.uid;
       state.photoURL = action.payload.photoURL;
     },
     removeUser: (state) => {
       state.displayName = null;
       state.email = null;
-      state.id = null;
+      state.uid = null;
       state.photoURL =  null;
     },
   },

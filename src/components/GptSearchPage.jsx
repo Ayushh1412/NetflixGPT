@@ -1,41 +1,90 @@
-import { BG_IMAGE } from "../utils/constants";
+import { BG_IMAGE, OMDB_API_KEY, OMDB_API_URL } from "../utils/constants";
+import { useRef } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addGptMovieResult } from "../utils/gptSlice";
+import GptMovieSuggestions from "./GptMovieSuggestions";
+import openai from "../utils/openai";
+import { lang } from "../utils/languageConstants";
 
 const GptSearchPage = () => {
+    const searchText = useRef(null);
+    const dispatch = useDispatch();
+    const langKey = useSelector((store) => store.config.lang);
+
+    const searchMovieOMDB = async (movie) => {
+        const data = await fetch(
+             `${OMDB_API_URL}?apikey=${OMDB_API_KEY}&s=${movie}&type=movie`
+        );
+        const json = await data.json();
+        return json.Search || [];
+    };
+
+    const handleGptSearchClick = async () => {
+        const query = searchText.current.value;
+        if(!query) return;
+
+        const gptQuery = "Act as a Movie Recommendation system and suggest some movies for the query : " +
+            query +
+            ". only give me names of 5 movies, comma separated like the example result given ahead. Example Result: Gadar, Sholay, Don, Golmaal, Koi Mil Gaya";
+
+        try {
+            const gptResults = await openai.chat.completions.create({
+                messages: [{ role: 'user', content: gptQuery }],
+                model: 'gpt-3.5-turbo',
+            });
+
+            if (!gptResults.choices) {
+                // Handle Error
+                return;
+            }
+
+            const gptMovies = gptResults.choices?.[0]?.message?.content.split(",");
+
+            // For each movie, search OMDB
+            const promiseArray = gptMovies.map((movie) => searchMovieOMDB(movie.trim()));
+            const omdbResults = await Promise.all(promiseArray);
+
+            dispatch(addGptMovieResult({
+                movieNames: gptMovies,
+                movieResults: omdbResults 
+            }));
+            
+        } catch (error) {
+            console.error("GPT Search Error:", error);
+            // Fallback to direct search if GPT fails or key is invalid
+            const searchResults = await searchMovieOMDB(query);
+            dispatch(addGptMovieResult({
+                movieNames: [`Results for: ${query}`],
+                movieResults: [searchResults] 
+            }));
+        }
+    };
+
   return (
     <>
     <div className="absolute -z-30">
             <img
               src = {BG_IMAGE}
               alt="logo"
-              className="w-screen min-h-screen scale-125 brightness-0 md:brightness-50"
+              className="w-screen min-h-screen scale-125 brightness-0 md:brightness-50 object-cover fixed"
               />
     </div>
-   <div className="flex h-screen justify-center place-items-center  text-white">
-    <div className=" relative  grid w-1/2  grid-cols-12">
-        <div className="relative col-span-8 -top-4">
+   <div className="pt-[30%] md:pt-[10%] flex justify-center">
+    <form className="w-full md:w-1/2 bg-black grid grid-cols-12 rounded-lg" onSubmit={(e)=>e.preventDefault()}>
         <input 
+            ref={searchText}
             type="text"
-            // ref={email}
-            id="gptSearch"
-            className="p-4 my-4 w-full bg-black bg-opacity-5 rounded-md inner-border-2 border-white peer"
-            placeholder=" "
-            autoComplete="search"
+            className="p-4 m-4 col-span-9 rounded-lg"
+            placeholder={lang[langKey].gptSearchPlaceholder}
         />
-        <label
-            htmlFor="gptSearch"
-            className="absolute ml-2 mt-3 text-base text-white dark:text-white duration-300 transform -translate-y-3 scale-75 top-4 z-10 origin-[0] start-2.5 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/3 rtl:peer-focus:left-auto"
+        <button className="col-span-3 m-4 py-2 px-4 bg-red-700 text-white rounded-lg hover:bg-red-800"
+            onClick={handleGptSearchClick}
         >
-            What would you like to watch today?
-        </label>
-        </div>
-        <div className="col-span-4 ml-3">
-        <button className="bg-red-500 hover:bg-red-700 w-full text-white font-bold  p-4 rounded">
-        Search
+        {lang[langKey].search}
         </button>
-        
-      </div>
+    </form>
     </div>
-    </div>
+    <GptMovieSuggestions />
     </>
   )
 }

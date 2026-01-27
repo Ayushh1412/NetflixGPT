@@ -7,7 +7,7 @@ const MovieList = ({title,movies}) => {
 
        <div className=" flex no-scrollbar overflow-x-scroll ">
         <div className="flex h-auto py-4">
-         { movies && movies.map((movie)=><MovieCard key={movie.id} movie={movie} />) }
+         { movies && movies.map((movie, index)=><MovieCard key={movie.imdbID + "-" + index} movie={movie} />) }
         </div>
         
     </div>           

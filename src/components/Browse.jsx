@@ -7,9 +7,7 @@ import useUpcomingMovies from "../hooks/useUpcomingMovies.jsx";
 import useNowPlaying from "../hooks/useNowPlaying.jsx";
 import { useSelector } from "react-redux";
 import GptSearchPage from "./GptSearchPage.jsx";
-
-
-
+import MovieDetailModal from "./MovieDetailModal.jsx";
 
 const Browse = () => {
   usePopularMovies();
@@ -21,7 +19,7 @@ const Browse = () => {
   return (
     <div>
       <Header/>
-
+      <MovieDetailModal />
         {gptSearch
         ?<>
         <GptSearchPage/>

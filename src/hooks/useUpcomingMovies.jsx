@@ -1,21 +1,25 @@
 import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
+import { OMDB_API_KEY, OMDB_API_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addUpcoming } from "../utils/movieSlice";
+
 const useUpcomingMovies = () => {
-const dispatch = useDispatch();   
-const getMovies = async()=>{
-
-    const data = await fetch('https://api.themoviedb.org/3/movie/upcoming?page=1',API_OPTIONS)
-    const upcoming= await data.json();
-    dispatch(addUpcoming(upcoming.results));
-    
+  const dispatch = useDispatch();
+  const getMovies = async () => {
+    try {
+      const data = await fetch(`${OMDB_API_URL}?apikey=${OMDB_API_KEY}&s=Star Wars&type=movie`);
+      const json = await data.json();
+      if(json.Search){
+        dispatch(addUpcoming(json.Search));
+      }
+    } catch (error) {
+      console.error("Error fetching upcoming movies:", error);
     }
+  };
 
-useEffect(() => {
-  getMovies();
-}, [])
-
-}
+  useEffect(() => {
+    getMovies();
+  }, []);
+};
 
 export default useUpcomingMovies;

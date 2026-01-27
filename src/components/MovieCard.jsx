@@ -1,15 +1,24 @@
 
 
+import { useDispatch } from "react-redux";
+import { openModal } from "../utils/uiSlice";
+import { motion } from "framer-motion";
+
 const MovieCard = ({movie}) => {
-   const  poster = movie.poster_path
-    
+   const dispatch = useDispatch();
+   const poster = movie.Poster;
+   if(poster === 'N/A') return null;
 
   return (
-    <div className="rounded hover:scale-105 transition-all">
-       <div className="w-40  ml-6 rounded ">
-        <img className="rounded-xl " src={"https://image.tmdb.org/t/p/w500/"+poster} alt="poster"/>
+    <motion.div 
+        className="rounded hover:scale-105 transition-all cursor-pointer"
+        onClick={() => dispatch(openModal(movie))}
+        layoutId={`movie-${movie.imdbID}`}
+    >
+       <div className="w-40 ml-6 rounded">
+        <img className="rounded-xl" src={poster} alt="poster"/>
        </div>
-        </div>
+    </motion.div>
   )
 }
 

@@ -1,25 +1,32 @@
 import { useEffect } from "react"
-import { API_OPTIONS } from "../utils/constants"
 import { addTrailerVideo } from "../utils/movieSlice"
 import { useDispatch } from "react-redux"
+import { YOUTUBE_API_KEY } from "../utils/constants";
 
-const useTrailerVideo = (movieId) => {
+const useTrailerVideo = (movieTitle) => {
     const dispatch = useDispatch();
      
     const getVideoTrailer = async() => {
-        const data = await fetch(`https://api.themoviedb.org/3/movie/${movieId}/videos?language=en-US`,API_OPTIONS)
-        const videos = await data.json()
-        const filteredData = videos.results.filter((video)=>video?.type == "Trailer")
-        const trailer = filteredData?filteredData[0]:videos[0]
-        dispatch(addTrailerVideo(trailer))
-
-
+        if(!movieTitle) return;
+        
+        try {
+            const response = await fetch(
+                `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(movieTitle + " trailer")}&type=video&maxResults=1&key=${YOUTUBE_API_KEY}`
+            );
+            const json = await response.json();
+            
+            if (json.items && json.items.length > 0) {
+                const videoId = json.items[0].id.videoId;
+                dispatch(addTrailerVideo({ key: videoId }));
+            }
+        } catch (error) {
+            console.error("Error fetching trailer from YouTube API:", error);
+        }
     }
 
     useEffect(()=>{
         getVideoTrailer()
-    
-    },[])
+    },[movieTitle])
   
 }
 

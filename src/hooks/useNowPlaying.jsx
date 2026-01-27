@@ -1,21 +1,25 @@
 import { useEffect } from "react";
-import { API_OPTIONS } from "../utils/constants";
+import { OMDB_API_KEY, OMDB_API_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
 import { addNowPlaying } from "../utils/movieSlice";
+
 const useNowPlaying = () => {
-const dispatch = useDispatch();   
-const getMovies = async()=>{
-
-    const data = await fetch('https://api.themoviedb.org/3/movie/now_playing?page=1',API_OPTIONS)
-    const nowPlaying= await data.json();
-    dispatch(addNowPlaying(nowPlaying.results));
-    
+  const dispatch = useDispatch();
+  const getMovies = async () => {
+    try {
+      const data = await fetch(`${OMDB_API_URL}?apikey=${OMDB_API_KEY}&s=Marvel&type=movie`);
+      const json = await data.json();
+      if(json.Search) {
+          dispatch(addNowPlaying(json.Search));
+      }
+    } catch (error) {
+      console.error("Error fetching now playing movies:", error);
     }
+  };
 
-useEffect(() => {
-  getMovies();
-}, [])
-
-}
+  useEffect(() => {
+    getMovies();
+  }, []);
+};
 
 export default useNowPlaying;
