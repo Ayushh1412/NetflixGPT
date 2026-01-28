@@ -1,18 +1,19 @@
 import MovieCard from "./MovieCard"
 
-const MovieList = ({title,movies}) => {
+const MovieList = ({ title, movies }) => {
   return (
-    <div className=" relative m-4 p-4 z-50  ">
-      <h1 className=" p-4 text-3xl text-slate-300 font-mono ">{title}</h1>            
-
-       <div className=" flex no-scrollbar overflow-x-scroll ">
-        <div className="flex h-auto py-4">
-         { movies && movies.map((movie, index)=><MovieCard key={movie.imdbID + "-" + index} movie={movie} />) }
+    <div className="px-2 md:px-6">
+      <h1 className="text-xl md:text-3xl py-4 text-white font-semibold">{title}</h1>
+      <div className="flex overflow-x-scroll no-scrollbar">
+        <div className="flex">
+          {movies &&
+            movies.map((movie, index) => (
+              <MovieCard key={movie.imdbID + "-" + index} movie={movie} />
+            ))}
         </div>
-        
-    </div>           
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default MovieList

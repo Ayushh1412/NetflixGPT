@@ -62,31 +62,37 @@ const GptSearchPage = () => {
 
   return (
     <>
-    <div className="absolute -z-30">
-            <img
-              src = {BG_IMAGE}
-              alt="logo"
-              className="w-screen min-h-screen scale-125 brightness-0 md:brightness-50 object-cover fixed"
-              />
-    </div>
-   <div className="pt-[30%] md:pt-[10%] flex justify-center">
-    <form className="w-full md:w-1/2 bg-black grid grid-cols-12 rounded-lg" onSubmit={(e)=>e.preventDefault()}>
-        <input 
+      <div className="fixed -z-30 w-full h-full">
+        <img
+          src={BG_IMAGE}
+          alt="background"
+          className="w-full h-full object-cover brightness-50"
+        />
+      </div>
+      <div className="pt-[45%] md:pt-[10%] flex justify-center px-4">
+        <form
+          className="w-full md:w-1/2 bg-black grid grid-cols-12 rounded-lg bg-opacity-80"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <input
             ref={searchText}
             type="text"
-            className="p-4 m-4 col-span-9 rounded-lg"
+            className="p-3 m-4 col-span-9 rounded-lg text-sm md:text-base"
             placeholder={lang[langKey].gptSearchPlaceholder}
-        />
-        <button className="col-span-3 m-4 py-2 px-4 bg-red-700 text-white rounded-lg hover:bg-red-800"
+          />
+          <button
+            className="col-span-3 m-4 py-2 px-2 md:px-4 bg-red-700 text-white rounded-lg hover:bg-red-800 text-sm md:text-base"
             onClick={handleGptSearchClick}
-        >
-        {lang[langKey].search}
-        </button>
-    </form>
-    </div>
-    <GptMovieSuggestions />
+          >
+            {lang[langKey].search}
+          </button>
+        </form>
+      </div>
+      <div className="mt-4">
+        <GptMovieSuggestions />
+      </div>
     </>
-  )
-}
+  );
+};
 
 export default GptSearchPage;

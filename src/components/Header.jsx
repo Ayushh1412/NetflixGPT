@@ -53,47 +53,56 @@ const Header = () => {
   }, []);
 
   return (
-    <div className="absolute px-2 md:px-8 py-1 w-full z-10 flex justify-between">
+    <div className="absolute px-2 md:px-8 py-1 w-full z-10 flex flex-col md:flex-row justify-between bg-gradient-to-b from-black">
       <img
-        className="w-24 md:w-32 lg:w-48 mx-1 lg:mx-32 md:mx-16 sm:mx-1 my-0.5 saturate-150"
+        className="w-40 md:w-48 mx-auto md:mx-0 py-2 saturate-150"
         src={logo}
         alt="logo"
       />
-      <div className="inline-flex items-center cursor-pointer gap-2 ">
-        <div className="px-4 py-2 -mr-2 ">
-          <select className="px-4 py-1 rounded bg-gray-900 text-white" onChange={handleLanguageChange}>
-            {SUPPORTED_LANGUAGES.map((lang) => (
-              <option key={lang.identifier} value={lang.identifier}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
+      {email && (
+        <div className="flex flex-wrap justify-center md:justify-end items-center cursor-pointer gap-2 md:gap-4">
+          <div className="p-2">
+            <select
+              className="px-2 md:px-4 py-1 rounded bg-gray-900 text-white text-sm md:text-base"
+              onChange={handleLanguageChange}
+              value={langKey}
+            >
+              {SUPPORTED_LANGUAGES.map((lang) => (
+                <option key={lang.identifier} value={lang.identifier}>
+                  {lang.name}
+                </option>
+              ))}
+            </select>
+          </div>
+          <div className="p-2">
+            <button
+              onClick={HandleGptButton}
+              className="text-sm md:text-base px-3 md:px-4 py-1 bg-purple-800 text-white rounded hover:bg-opacity-80 transition-all"
+            >
+              {lang[langKey].gptSearch}
+            </button>
+          </div>
+          <div className="p-2">
+            <button
+              onClick={handleSignOut}
+              className="text-sm md:text-base px-3 md:px-4 py-1 bg-red-600 text-white rounded hover:bg-opacity-80 transition-all"
+            >
+              {lang[langKey].signOut}
+            </button>
+          </div>
+          <div className="flex flex-col items-center ml-2">
+            <img
+              className="w-8 md:w-10 rounded-sm"
+              src={photo || PROFILE}
+              alt="user-icon"
+              referrerPolicy="no-referrer"
+            />
+            <p className="text-xs md:text-sm font-bold text-white hidden md:block">
+              {name?.split(" ").slice(0, 1).join(" ") || name}
+            </p>
+          </div>
         </div>
-        {email && <div className="px-4 py-2 ">
-          <button
-          onClick={HandleGptButton}
-          className="text-base  px-4 py-1  bg-red-600 text-white rounded hover:bg-slate-700 hover:scale-95 bg-opacity-70  transition-all">{lang[langKey].gptSearch}</button>
-        </div>}
-        <div className=" mr-4">
-          {email && (
-            <div>
-              <button onClick={handleSignOut} className="text-base  px-4 py-1  bg-red-600 text-white rounded hover:bg-slate-700 hover:scale-95 bg-opacity-70 transition-all">
-                {lang[langKey].signOut}
-              </button>
-            
-            </div>
-           )}
-        </div>
-        <div className = {email?"translate-y-3":""}>
-          <img className="w-10"
-           src= {photo ? photo : PROFILE}
-           alt="user-icon"
-           />
-         <p className="text-base font-bold  text-red-500">{name?.split(' ').slice(0, -1).join(' ') || name}</p>
-        </div>
-        
-        
-      </div>
+      )}
     </div>
   );
 };
