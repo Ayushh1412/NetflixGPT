@@ -81,10 +81,5 @@ Contributions are welcome! If you have suggestions for improvements or new featu
 3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
 4. Push to the Branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ---
-Built with ❤️ by [Ayush](https://github.com/ayush)
+Built with ❤️ by [Ayush](https://github.com/Ayush1412)
