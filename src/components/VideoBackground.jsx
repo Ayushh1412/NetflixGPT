@@ -10,9 +10,9 @@ const VideoBackground = ({ movieTitle, poster }) => {
   );
 
   return (
-    <div className="w-screen">
+    <div className="w-full h-full">
       <img
-        className={`w-screen aspect-video object-cover absolute top-0 left-0 transition-opacity duration-1000 ${
+        className={`w-full h-full object-cover absolute top-0 left-0 transition-opacity duration-1000 ${
           videoLoaded ? "opacity-0" : "opacity-100"
         }`}
         src={poster}
@@ -20,14 +20,17 @@ const VideoBackground = ({ movieTitle, poster }) => {
       />
       {trailerVideoKey && (
         <iframe
-          className="w-screen aspect-video"
+          className="w-full h-full"
           src={
             "https://www.youtube.com/embed/" +
             trailerVideoKey +
-            "?autoplay=1&mute=1&showinfo=0&controls=0&autohide=1&start=5"
+            "?autoplay=1&mute=1&loop=1&playlist=" +
+            trailerVideoKey +
+            "&rel=0&controls=0&showinfo=0"
           }
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
           onLoad={() => setTimeout(() => setVideoLoaded(true), 2000)}
         ></iframe>
       )}

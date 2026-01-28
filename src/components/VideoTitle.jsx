@@ -10,8 +10,8 @@ const VideoTitle = ({title, overview, movie}) => {
     dispatch(openModal(movie));
   }
   return (
-    <div className="absolute w-screen aspect-video pt-[25%] md:pt-[15%] px-6 md:px-16 from-black bg-gradient-to-r z-[5]">
-      <h1 className="text-2xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-6 text-white">
+    <div className="absolute w-full h-full pt-[20%] md:pt-[15%] px-6 md:px-16 from-black bg-gradient-to-r z-[5]">
+      <h1 className="text-xl md:text-4xl lg:text-6xl font-bold mb-2 md:mb-6 text-white">
         {title}
       </h1>
       <p className="hidden md:inline-block text-sm md:text-base text-white mb-4 w-full md:w-1/2 lg:w-1/3">

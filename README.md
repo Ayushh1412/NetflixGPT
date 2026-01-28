@@ -5,7 +5,7 @@ NetGPT is a modern, responsive Netflix-style web application that integrates AI 
 ![NetGPT Preview](./src/assets/netgpt.png)
 
 ## 🔗 Live Demo
-[Explore NetGPT Live](https://majestic-mandazi-e4c457.netlify.app/)
+[Explore NetGPT Live](https://nettgpt.netlify.app/Browse)
 
 ## 🚀 Features
 

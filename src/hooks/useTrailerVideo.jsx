@@ -15,12 +15,17 @@ const useTrailerVideo = (movieTitle) => {
             );
             const json = await response.json();
             
+            if (json.error) {
+                console.error("YouTube API Error:", json.error.message, json.error.errors);
+                return;
+            }
+
             if (json.items && json.items.length > 0) {
                 const videoId = json.items[0].id.videoId;
                 dispatch(addTrailerVideo({ key: videoId }));
             }
         } catch (error) {
-            console.error("Error fetching trailer from YouTube API:", error);
+            console.error("Network error fetching trailer:", error);
         }
     }
 

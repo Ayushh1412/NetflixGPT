@@ -5,7 +5,7 @@ const MovieList = ({ title, movies }) => {
     <div className="px-2 md:px-6">
       <h1 className="text-xl md:text-3xl py-4 text-white font-semibold">{title}</h1>
       <div className="flex overflow-x-scroll no-scrollbar">
-        <div className="flex">
+        <div className="flex py-4">
           {movies &&
             movies.map((movie, index) => (
               <MovieCard key={movie.imdbID + "-" + index} movie={movie} />

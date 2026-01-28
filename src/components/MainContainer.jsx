@@ -16,7 +16,7 @@ const MainContainer = () => {
   const { Title, Year, Poster } = mainMovie;
 
   return (
-    <div className="pt-[30%] bg-black md:pt-0">
+    <div className="relative w-screen aspect-video bg-black overflow-hidden">
       <VideoTitle
         title={Title}
         overview={`Released in ${Year}. A popular movie in our collection.`}
